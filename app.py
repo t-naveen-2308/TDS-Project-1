@@ -317,6 +317,7 @@ async def find_similar_content(query_embedding, conn):
 
 # Function to enrich content with adjacent chunks
 async def enrich_with_adjacent_chunks(conn, results):
+    print(results)
     try:
         logger.info(f"Enriching {len(results)} results with adjacent chunks")
         cursor = conn.cursor()
@@ -389,6 +390,7 @@ async def enrich_with_adjacent_chunks(conn, results):
 
 # Function to generate an answer using LLM with improved prompt
 async def generate_answer(question, relevant_results, max_retries=2):
+    print(relevant_results)
     if not API_KEY:
         error_msg = "API_KEY environment variable not set"
         logger.error(error_msg)
@@ -598,6 +600,7 @@ def parse_llm_response(response):
 # Define API routes
 @app.post("/query")
 async def query_knowledge_base(request: QueryRequest):
+    logger.info(str(request))
     try:
         # Log the incoming request
         logger.info(f"Received query request: question='{request.question[:50]}...', image_provided={request.image is not None}")
